@@ -3,39 +3,42 @@ import FormularioDinamico from "../components/FormularioDinamico";
 import { categoriasConfig } from "../data/categorias";
 
 export default function Home() {
-  const [categoria, setCategoria] = useState("");
+  const [categoriaActiva, setCategoriaActiva] = useState("");
 
   return (
     <div className="p-5">
 
-      <h1 className="text-3xl font-bold mb-5 text-[color:var(--secondary)]">
-        Crear Producto 💰
+      <h1 className="text-3xl font-bold mb-6 text-[color:var(--secondary)]">
+        Selecciona una categoría 💰
       </h1>
 
-      {/* SELECT DE CATEGORÍAS */}
-      <div className="mb-5">
-        <label className="block mb-2 font-semibold">
-          Selecciona una categoría
-        </label>
+      {/* 🧱 GRID DE TARJETAS */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
 
-        <select
-          className="w-full p-2 border rounded"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-        >
-          <option value="">Selecciona categoría</option>
+        {Object.keys(categoriasConfig).map((cat) => (
+          <div
+            key={cat}
+            onClick={() => setCategoriaActiva(cat)}
+            className={`p-5 rounded-xl cursor-pointer shadow-md transition transform hover:scale-105
+              ${
+                categoriaActiva === cat
+                  ? "bg-[color:var(--primary)] text-black"
+                  : "bg-white"
+              }
+            `}
+          >
+            <h2 className="text-lg font-bold">{cat}</h2>
+            <p className="text-sm opacity-70 mt-1">
+              Crear {cat.toLowerCase()}
+            </p>
+          </div>
+        ))}
 
-          {Object.keys(categoriasConfig).map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
       </div>
 
-      {/* FORMULARIO DINÁMICO */}
-      {categoria && (
-        <FormularioDinamico categoria={categoria} />
+      {/* 🧾 FORMULARIO DINÁMICO */}
+      {categoriaActiva && (
+        <FormularioDinamico categoria={categoriaActiva} />
       )}
 
     </div>
