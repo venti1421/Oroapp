@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #D4AF37;
+  --secondary: #3042B3;
+  --accent: #6579F7;
+  --bg: #F5F5F5;
+  --soft: #FCEAAC;
+}
+
+/* base app */
+body {
+  background-color: var(--bg);
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+/* botones reutilizables */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
