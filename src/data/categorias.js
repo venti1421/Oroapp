@@ -8,29 +8,29 @@ export const categoriasConfig = {
   },
 
   ARETES: {
-    campos: ["tipoArete", "tamanio", "descripcion"],
+    campos: ["tipoArete", "tamaño", "descripcion"],
     opciones: {
       tipoArete: ["Topos", "Largos", "Candongas"],
-      tamanio: ["Pequeño", "Mediano", "Grande"]
+      tamaño: ["Pequeño", "Mediano", "Grande"]
     }
   },
 
   DIJES: {
-    campos: ["tamanio", "descripcion"],
+    campos: ["tamaño", "descripcion"],
     opciones: {
-      tamanio: ["Pequeño", "Mediano", "Grande"]
+      tamaño: ["Pequeño", "Mediano", "Grande"]
     }
   },
 
   CADENAS: {
-    campos: ["tejido", "largoCm", "descripcion"],
+    campos: ["tejido", "largo Cm", "descripcion"],
     opciones: {
       largoCm: ["40", "45", "50", "55", "60"]
     }
   },
 
   PULSERA: {
-    campos: ["tejido", "largoCm", "descripcion"],
+    campos: ["tejido", "largo Cm", "descripcion"],
     opciones: {
       largoCm: ["18", "19", "20", "22"]
     }

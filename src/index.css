@@ -1,25 +1,43 @@
 @import "tailwindcss";
 
+/* 🎨 VARIABLES DE COLOR (TU PALETA) */
 :root {
-  --primary: #D4AF37;   /* dorado */
-  --secondary: #3042B3; /* azul oscuro */
-  --accent: #6579F7;    /* azul claro */
-  --bg: #0f172a;        /* fondo oscuro real */
-  --soft: #FCEAAC;      /* dorado claro */
-  --light: #F5F5F5;     /* gris claro */
+  --primary: #D4AF37;
+  --secondary: #3042B3;
+  --accent: #6579F7;
+  --bg: #F5F5F5;
+  --soft: #FCEAAC;
 }
 
-/* BASE APP */
+/* 🌍 BASE GLOBAL */
 body {
-  background: linear-gradient(135deg, #3042B3, #6579F7, #3042B3);
-  color: white;
+  margin: 0;
+  padding: 0;
   font-family: system-ui, sans-serif;
-  min-height: 100vh;
+
+  /* 🔥 FONDO GLOBAL PRO */
+  background: linear-gradient(
+    135deg,
+    #3042B3,
+    #6579F7,
+    #3042B3
+  );
+
+  color: white;
 }
 
-/* 🔘 BOTÓN PRINCIPAL */
+/* 🧩 CARDS */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+/* 🔘 BOTONES */
 .btn-primary {
-  background: var(--primary);
+  background-color: var(--primary);
   color: black;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -31,9 +49,8 @@ body {
   opacity: 0.9;
 }
 
-/* 🔘 BOTÓN SECUNDARIO */
 .btn-secondary {
-  background: var(--secondary);
+  background-color: var(--secondary);
   color: white;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -41,57 +58,29 @@ body {
 }
 
 .btn-secondary:hover {
-  background: var(--accent);
-}
-
-/* 🧊 TARJETAS GLASS */
-.card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 1rem;
-  color: white;
-}
-
-/* ✨ INPUTS */
-.input {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  outline: none;
-}
-
-.input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
 /* 🧭 NAVBAR */
 .navbar {
+  backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* ✨ EFECTOS DE LUZ (reutilizable) */
-.glow-blue {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: var(--accent);
-  opacity: 0.3;
-  filter: blur(80px);
-  border-radius: 50%;
+/* ✨ ANIMACIÓN GLOBAL */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.glow-gold {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: var(--primary);
-  opacity: 0.2;
-  filter: blur(80px);
-  border-radius: 50%;
+.animate-fade-in {
+  animation: fade-in 0.4s ease;
 }
