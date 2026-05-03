@@ -1,5 +1,5 @@
-import { categoriasConfig } from "../data/categorias";
 import { useState } from "react";
+import { categoriasConfig } from "../data/categorias";
 
 export default function FormularioDinamico({ categoria }) {
   const config = categoriasConfig[categoria];
@@ -9,41 +9,61 @@ export default function FormularioDinamico({ categoria }) {
   const handleChange = (campo, valor) => {
     setFormData({
       ...formData,
-      [campo]: valor
+      [campo]: valor,
     });
   };
 
-  if (!config) return <p>Selecciona una categoría</p>;
+  const handleSubmit = () => {
+    console.log("Producto:", { categoria, ...formData });
+
+    alert("Producto guardado 🚀");
+
+    setFormData({});
+  };
+
+  if (!config) return null;
 
   return (
-    <div className="p-5 bg-white rounded-xl shadow-md max-w-md mx-auto">
+    <div className="card max-w-md mx-auto mt-4">
 
-      <h2 className="text-xl font-bold mb-4">{categoria}</h2>
+      <h2 className="text-xl font-bold mb-4 text-[#D4AF37]">
+        {categoria}
+      </h2>
 
+      {/* CAMPOS DINÁMICOS */}
       {config.campos.map((campo) => (
         <div key={campo} className="mb-3">
 
+          {/* DESCRIPCIÓN */}
           {campo === "descripcion" ? (
             <textarea
               placeholder="Descripción"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 rounded bg-white/90 text-black border"
+              value={formData[campo] || ""}
               onChange={(e) => handleChange(campo, e.target.value)}
             />
           ) : config.opciones[campo] ? (
+            /* SELECT */
             <select
-              className="w-full p-2 border rounded"
+              className="w-full p-2 rounded bg-white/90 text-black border"
+              value={formData[campo] || ""}
               onChange={(e) => handleChange(campo, e.target.value)}
             >
-              <option>Selecciona {campo}</option>
+              <option value="">Selecciona {campo}</option>
+
               {config.opciones[campo].map((op) => (
-                <option key={op}>{op}</option>
+                <option key={op} value={op}>
+                  {op}
+                </option>
               ))}
             </select>
           ) : (
+            /* INPUT */
             <input
               type="text"
               placeholder={campo}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 rounded bg-white/90 text-black border"
+              value={formData[campo] || ""}
               onChange={(e) => handleChange(campo, e.target.value)}
             />
           )}
@@ -51,9 +71,14 @@ export default function FormularioDinamico({ categoria }) {
         </div>
       ))}
 
-      <button className="btn-primary mt-3">
-        Guardar
+      {/* BOTÓN */}
+      <button
+        onClick={handleSubmit}
+        className="btn-primary w-full mt-3"
+      >
+        Guardar Producto
       </button>
+
     </div>
   );
 }

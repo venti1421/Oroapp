@@ -1,17 +1,42 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center p-4 bg-[color:var(--secondary)] text-white shadow-md">
-      <h1 className="font-bold text-lg text-[color:var(--primary)]">
+    <nav className="flex justify-between items-center px-6 py-3 
+    bg-white/10 backdrop-blur-md border-b border-white/20 text-white">
+
+      {/* LOGO */}
+      <h1 className="font-bold text-xl text-[#D4AF37]">
         OroApp 💰
       </h1>
 
-      <div className="flex gap-4">
-        <a href="/home" className="hover:text-[color:var(--accent)]">
+      {/* LINKS */}
+      <div className="flex gap-6 text-sm">
+
+        <Link
+          to="/home"
+          className="hover:text-[#D4AF37] transition"
+        >
           Inicio
-        </a>
-        <a href="/favorites" className="hover:text-[color:var(--accent)]">
+        </Link>
+
+        <Link
+          to="/favorites"
+          className="hover:text-[#D4AF37] transition"
+        >
           Favoritos
-        </a>
+        </Link>
+
+        <button
+          onClick={() => {
+            localStorage.removeItem("user");
+            window.location.href = "/";
+          }}
+          className="hover:text-red-400 transition"
+        >
+          Salir
+        </button>
+
       </div>
     </nav>
   );

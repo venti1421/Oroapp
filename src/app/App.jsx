@@ -7,8 +7,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* LOGIN */}
         <Route path="/" element={<Login />} />
 
+        {/* HOME CON FONDO */}
         <Route
           path="/home"
           element={
@@ -17,6 +20,7 @@ export default function App() {
             </Layout>
           }
         />
+
       </Routes>
     </BrowserRouter>
   );

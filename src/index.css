@@ -1,35 +1,97 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #D4AF37;
-  --secondary: #3042B3;
-  --accent: #6579F7;
-  --bg: #F5F5F5;
-  --soft: #FCEAAC;
+  --primary: #D4AF37;   /* dorado */
+  --secondary: #3042B3; /* azul oscuro */
+  --accent: #6579F7;    /* azul claro */
+  --bg: #0f172a;        /* fondo oscuro real */
+  --soft: #FCEAAC;      /* dorado claro */
+  --light: #F5F5F5;     /* gris claro */
 }
 
-/* base app */
+/* BASE APP */
 body {
-  background-color: var(--bg);
-  color: #111;
+  background: linear-gradient(135deg, #3042B3, #6579F7, #3042B3);
+  color: white;
   font-family: system-ui, sans-serif;
+  min-height: 100vh;
 }
 
-/* botones reutilizables */
+/* 🔘 BOTÓN PRINCIPAL */
 .btn-primary {
-  background-color: var(--primary);
-  color: white;
+  background: var(--primary);
+  color: black;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
+  transform: scale(1.05);
   opacity: 0.9;
 }
 
+/* 🔘 BOTÓN SECUNDARIO */
 .btn-secondary {
-  background-color: var(--secondary);
+  background: var(--secondary);
   color: white;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--accent);
+}
+
+/* 🧊 TARJETAS GLASS */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  color: white;
+}
+
+/* ✨ INPUTS */
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 🧭 NAVBAR */
+.navbar {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ✨ EFECTOS DE LUZ (reutilizable) */
+.glow-blue {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: var(--accent);
+  opacity: 0.3;
+  filter: blur(80px);
+  border-radius: 50%;
+}
+
+.glow-gold {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: var(--primary);
+  opacity: 0.2;
+  filter: blur(80px);
+  border-radius: 50%;
 }
