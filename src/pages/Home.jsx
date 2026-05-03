@@ -10,7 +10,6 @@ export default function Home() {
   const [categoriaActiva, setCategoriaActiva] = useState(null);
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
-  const [estadoFiltro, setEstadoFiltro] = useState("");
   const [loading, setLoading] = useState(true);
 
   const loadData = () => {
@@ -31,10 +30,15 @@ export default function Home() {
     busqueda,
     {
       categoria: categoriaActiva || undefined,
-      estado: estadoFiltro || undefined,
     },
     ["descripcion"]
   );
+
+  const handleGenerateReport = () => {
+    alert(
+      `Funcionalidad futura: generar informe${categoriaActiva ? ` para ${categoriaActiva}` : ""}`
+    );
+  };
 
   return (
     <div className="min-h-screen p-6 relative overflow-hidden">
@@ -46,9 +50,17 @@ export default function Home() {
 
       <div className="relative z-10 animate-fade-in">
 
-        <h1 className="text-3xl font-bold text-[#D4AF37] mb-6 drop-shadow-lg">
-          OroApp 💰
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <h1 className="text-3xl font-bold text-[#D4AF37] drop-shadow-lg">
+            OroApp 💰
+          </h1>
+          <button
+            onClick={handleGenerateReport}
+            className="px-4 py-2 rounded bg-[#D4AF37] text-black font-semibold hover:bg-[#c6a84a] transition"
+          >
+            Generar informe
+          </button>
+        </div>
 
         <input
           type="text"
@@ -58,40 +70,22 @@ export default function Home() {
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label className="block text-white text-sm mb-2">
-              Filtrar por categoría:
-            </label>
-            <select
-              value={categoriaActiva || ""}
-              onChange={(e) => setCategoriaActiva(e.target.value || null)}
-              className="w-full p-2 rounded bg-white/20 text-white outline-none focus:ring-2 focus:ring-[#D4AF37]"
-            >
-              <option value="">Todas</option>
-              {Object.keys(categoriasConfig).map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-white text-sm mb-2">
-              Filtrar por estado:
-            </label>
-            <select
-              value={estadoFiltro}
-              onChange={(e) => setEstadoFiltro(e.target.value)}
-              className="w-full p-2 rounded bg-white/20 text-white outline-none focus:ring-2 focus:ring-[#D4AF37]"
-            >
-              <option value="">Todos</option>
-              <option value="Nuevo">Nuevo</option>
-              <option value="Usado">Usado</option>
-              <option value="Vintage">Vintage</option>
-            </select>
-          </div>
+        <div className="mb-6">
+          <label className="block text-white text-sm mb-2">
+            Filtrar por categoría:
+          </label>
+          <select
+            value={categoriaActiva || ""}
+            onChange={(e) => setCategoriaActiva(e.target.value || null)}
+            className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
+          >
+            <option value="">Todas</option>
+            {Object.keys(categoriasConfig).map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-8">

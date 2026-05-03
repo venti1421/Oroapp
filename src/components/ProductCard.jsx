@@ -17,7 +17,7 @@ export default function ProductCard({ producto, refresh }) {
   return (
     <Link
       to={`/product/${producto.id}`}
-      className="card hover:shadow-lg hover:scale-105 transition-all cursor-pointer block"
+      className="card border border-[#D4AF37]/30 bg-[#D4AF37]/10 hover:shadow-lg hover:scale-105 transition-all cursor-pointer block"
     >
 
       <h3 className="text-[#D4AF37] font-bold">
@@ -49,12 +49,12 @@ export default function ProductCard({ producto, refresh }) {
 
         <button
           onClick={handleDelete}
-          className="bg-red-500 flex-1 px-3 py-1 rounded hover:bg-red-600"
+          className="bg-[#D4AF37] text-black flex-1 px-3 py-1 rounded hover:bg-[#C9B44A]"
         >
           Eliminar
         </button>
       </div>
 
-    </div>
+    </Link>
   );
 }

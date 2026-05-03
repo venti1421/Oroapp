@@ -18,8 +18,8 @@ export default function CategoryCard({ cat, active, onClick }) {
 
         ${
           active
-            ? "bg-[#D4AF37] text-black scale-105 shadow-lg"
-            : "bg-white/10 text-white border-white/20 hover:scale-105 hover:bg-white/20"
+            ? "bg-[#F8E9A1] text-black scale-105 shadow-lg border-[#D4AF37]/60"
+            : "bg-white/10 text-white border-[#D4AF37]/30 hover:scale-105 hover:bg-[#D4AF37]/10"
         }
       `}
     >

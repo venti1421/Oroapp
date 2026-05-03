@@ -1,51 +1,45 @@
 export const categoriasConfig = {
   ANILLOS: {
-    campos: ["genero", "talla", "estado", "descripcion"],
+    campos: ["genero", "talla", "descripcion"],
     opciones: {
       genero: ["Hombre", "Mujer"],
-      talla: ["5", "6", "7", "8", "9", "10", "11", "12"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      talla: ["5", "6", "7", "8", "9", "10", "11", "12"]
     }
   },
 
   ARETES: {
-    campos: ["tipoArete", "tamaño", "estado", "descripcion"],
+    campos: ["tipoArete", "tamaño", "descripcion"],
     opciones: {
       tipoArete: ["Topos", "Largos", "Candongas"],
-      tamaño: ["Pequeño", "Mediano", "Grande"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      tamaño: ["Pequeño", "Mediano", "Grande"]
     }
   },
 
   DIJES: {
-    campos: ["tamaño", "estado", "descripcion"],
+    campos: ["tamaño", "descripcion"],
     opciones: {
-      tamaño: ["Pequeño", "Mediano", "Grande"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      tamaño: ["Pequeño", "Mediano", "Grande"]
     }
   },
 
   CADENAS: {
-    campos: ["tejido", "largoCm", "estado", "descripcion"],
+    campos: ["largoCm", "descripcion"],
     opciones: {
-      largoCm: ["40", "45", "50", "55", "60"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      largoCm: ["40", "45", "50", "55", "60"]
     }
   },
 
   PULSERA: {
-    campos: ["tejido", "largoCm", "estado", "descripcion"],
+    campos: ["largoCm", "descripcion"],
     opciones: {
-      largoCm: ["18", "19", "20", "22"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      largoCm: ["18", "19", "20", "22"]
     }
   },
 
   ESPECIAL: {
-    campos: ["tipoEspecial", "estado", "descripcion"],
+    campos: ["tipoEspecial", "descripcion"],
     opciones: {
-      tipoEspecial: ["Relojes", "Tobilleras", "Piercing", "Herrajes"],
-      estado: ["Nuevo", "Usado", "Vintage"]
+      tipoEspecial: ["Relojes", "Tobilleras", "Piercing", "Herrajes"]
     }
   }
 };

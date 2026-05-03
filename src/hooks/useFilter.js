@@ -14,7 +14,13 @@ export function useFilter(items, searchTerm, filters, searchKeys = ["descripcion
       }
 
       for (const [key, value] of Object.entries(filters)) {
-        if (value && item[key] !== value) {
+        if (!value) continue;
+
+        const itemValue = item[key];
+        if (
+          itemValue == null ||
+          itemValue.toString().trim().toLowerCase() !== value.toString().trim().toLowerCase()
+        ) {
           return false;
         }
       }
