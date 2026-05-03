@@ -37,7 +37,6 @@ export default function FormularioDinamico({ categoria, onSave }) {
     setFormData({});
   };
 
-  // 🔥 PROTECCIÓN CLAVE
   if (!config) {
     return (
       <div className="text-white">
@@ -48,15 +47,12 @@ export default function FormularioDinamico({ categoria, onSave }) {
 
   return (
     <div className="card max-w-md mx-auto mt-4">
-
       <h2 className="text-[#D4AF37] font-bold mb-4">
         {categoria}
       </h2>
 
       {config.campos.map((campo) => (
         <div key={campo} className="mb-3">
-
-          {/* DESCRIPCIÓN */}
           {campo === "descripcion" ? (
             <textarea
               placeholder="Descripción"
@@ -65,7 +61,6 @@ export default function FormularioDinamico({ categoria, onSave }) {
               onChange={(e) => handleChange(campo, e.target.value)}
             />
           ) : config.opciones && config.opciones[campo] ? (
-            /* SELECT SEGURO */
             <select
               className="w-full p-2 rounded bg-white text-black"
               value={formData[campo] || ""}
@@ -80,7 +75,6 @@ export default function FormularioDinamico({ categoria, onSave }) {
               ))}
             </select>
           ) : (
-            /* INPUT */
             <input
               type="text"
               placeholder={campo}
@@ -89,7 +83,6 @@ export default function FormularioDinamico({ categoria, onSave }) {
               onChange={(e) => handleChange(campo, e.target.value)}
             />
           )}
-
         </div>
       ))}
 

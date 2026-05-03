@@ -4,11 +4,13 @@ import FormularioDinamico from "../components/FormularioDinamico";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import { productService } from "../services/productService";
+import { useFilter } from "../hooks/useFilter";
 
 export default function Home() {
   const [categoriaActiva, setCategoriaActiva] = useState(null);
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [estadoFiltro, setEstadoFiltro] = useState("");
   const [loading, setLoading] = useState(true);
 
   const loadData = () => {
@@ -17,36 +19,37 @@ export default function Home() {
     setTimeout(() => {
       setProductos(productService.getAll());
       setLoading(false);
-    }, 400); // efecto visual suave
+    }, 400);
   };
 
   useEffect(() => {
     loadData();
   }, []);
 
-  // 🔎 búsqueda
-  const productosFiltrados = productos.filter((p) =>
-    p.descripcion?.toLowerCase().includes(busqueda.toLowerCase())
+  const productosFiltrados = useFilter(
+    productos,
+    busqueda,
+    {
+      categoria: categoriaActiva || undefined,
+      estado: estadoFiltro || undefined,
+    },
+    ["descripcion"]
   );
 
   return (
     <div className="min-h-screen p-6 relative overflow-hidden">
 
-      {/* 🔥 FONDO PRO */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#3042B3] via-[#6579F7] to-[#3042B3]"></div>
 
-      {/* EFECTOS */}
       <div className="absolute w-96 h-96 bg-[#6579F7] opacity-30 rounded-full blur-3xl top-10 left-10"></div>
       <div className="absolute w-96 h-96 bg-[#D4AF37] opacity-20 rounded-full blur-3xl bottom-10 right-10"></div>
 
       <div className="relative z-10 animate-fade-in">
 
-        {/* HEADER */}
         <h1 className="text-3xl font-bold text-[#D4AF37] mb-6 drop-shadow-lg">
           OroApp 💰
         </h1>
 
-        {/* 🔎 BUSCADOR */}
         <input
           type="text"
           placeholder="Buscar por descripción..."
@@ -55,19 +58,56 @@ export default function Home() {
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        {/* 🧩 CATEGORÍAS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          {Object.keys(categoriasConfig).map((cat) => (
-            <CategoryCard
-              key={cat}
-              cat={cat}
-              active={categoriaActiva === cat}
-              onClick={() => setCategoriaActiva(cat)}
-            />
-          ))}
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-white text-sm mb-2">
+              Filtrar por categoría:
+            </label>
+            <select
+              value={categoriaActiva || ""}
+              onChange={(e) => setCategoriaActiva(e.target.value || null)}
+              className="w-full p-2 rounded bg-white/20 text-white outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            >
+              <option value="">Todas</option>
+              {Object.keys(categoriasConfig).map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-white text-sm mb-2">
+              Filtrar por estado:
+            </label>
+            <select
+              value={estadoFiltro}
+              onChange={(e) => setEstadoFiltro(e.target.value)}
+              className="w-full p-2 rounded bg-white/20 text-white outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            >
+              <option value="">Todos</option>
+              <option value="Nuevo">Nuevo</option>
+              <option value="Usado">Usado</option>
+              <option value="Vintage">Vintage</option>
+            </select>
+          </div>
         </div>
 
-        {/* 🧾 FORMULARIO */}
+        <div className="mb-8">
+          <p className="text-white text-sm mb-3">O selecciona una categoría:</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Object.keys(categoriasConfig).map((cat) => (
+              <CategoryCard
+                key={cat}
+                cat={cat}
+                active={categoriaActiva === cat}
+                onClick={() => setCategoriaActiva(cat)}
+              />
+            ))}
+          </div>
+        </div>
+
         {categoriaActiva && (
           <div className="animate-fade-in">
             <FormularioDinamico
@@ -77,13 +117,11 @@ export default function Home() {
           </div>
         )}
 
-        {/* 📦 PRODUCTOS */}
         <div className="mt-10">
           <h2 className="text-xl text-white mb-4">
-            📦 Productos
+            📦 Productos ({productosFiltrados.length})
           </h2>
 
-          {/* 🔄 LOADING */}
           {loading ? (
             <div className="grid md:grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
@@ -95,18 +133,16 @@ export default function Home() {
             </div>
           ) : productosFiltrados.length === 0 ? (
 
-            /* 📭 EMPTY STATE */
             <div className="text-center text-white opacity-70 mt-10">
               <p className="text-5xl mb-3">📦</p>
-              <p>No hay productos aún</p>
+              <p>No hay productos con esos filtros</p>
               <p className="text-sm">
-                Crea tu primer producto arriba
+                Intenta otros filtros o crea uno nuevo
               </p>
             </div>
 
           ) : (
 
-            /* 📋 LISTA */
             <div className="grid md:grid-cols-3 gap-4">
               {productosFiltrados.map((p) => (
                 <ProductCard

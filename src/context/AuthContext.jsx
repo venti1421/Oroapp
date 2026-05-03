@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext();
 
-// helper seguro para parsear JSON
 function safeParse(value) {
   try {
     return value ? JSON.parse(value) : null;
@@ -15,7 +14,6 @@ function safeParse(value) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // 🔄 cargar sesión al iniciar (con protección)
   useEffect(() => {
     const stored = localStorage.getItem("user");
     const parsed = safeParse(stored);
@@ -23,14 +21,11 @@ export function AuthProvider({ children }) {
     if (parsed && parsed.email) {
       setUser(parsed);
     } else if (stored) {
-      // si hay basura (string plano, JSON corrupto, etc.), limpiamos
       localStorage.removeItem("user");
     }
   }, []);
 
-  // 🔐 LOGIN
   const login = (userData) => {
-    // normalizamos para no guardar cosas raras
     const normalized = {
       email: userData.email,
     };
@@ -39,7 +34,6 @@ export function AuthProvider({ children }) {
     setUser(normalized);
   };
 
-  // 📝 REGISTER (opcional usar desde Login)
   const register = (newUser) => {
     const users = safeParse(localStorage.getItem("users")) || [];
 
@@ -59,13 +53,11 @@ export function AuthProvider({ children }) {
     return { ok: true };
   };
 
-  // 🚪 LOGOUT
   const logout = () => {
     localStorage.removeItem("user");
     setUser(null);
   };
 
-  // 🧠 valor memoizado (mejor rendimiento)
   const value = useMemo(
     () => ({
       user,
@@ -80,5 +72,4 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// 🔥 hook personalizado (esto suma puntos)
 export const useAuth = () => useContext(AuthContext);

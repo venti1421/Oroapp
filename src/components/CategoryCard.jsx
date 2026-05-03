@@ -23,17 +23,14 @@ export default function CategoryCard({ cat, active, onClick }) {
         }
       `}
     >
-      {/* ICONO */}
       <div className="text-3xl mb-2">
         {icons[cat]}
       </div>
 
-      {/* NOMBRE */}
       <h2 className="font-bold tracking-wide">
         {cat}
       </h2>
 
-      {/* EFECTO GLOW */}
       {active && (
         <div className="absolute inset-0 rounded-xl border-2 border-[#D4AF37] animate-pulse"></div>
       )}

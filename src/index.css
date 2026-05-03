@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* 🎨 VARIABLES DE COLOR (TU PALETA) */
 :root {
   --primary: #D4AF37;
   --secondary: #3042B3;
@@ -9,24 +8,19 @@
   --soft: #FCEAAC;
 }
 
-/* 🌍 BASE GLOBAL */
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, sans-serif;
-
-  /* 🔥 FONDO GLOBAL PRO */
   background: linear-gradient(
     135deg,
     #3042B3,
     #6579F7,
     #3042B3
   );
-
   color: white;
 }
 
-/* 🧩 CARDS */
 .card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -35,7 +29,6 @@ body {
   padding: 1rem;
 }
 
-/* 🔘 BOTONES */
 .btn-primary {
   background-color: var(--primary);
   color: black;
@@ -62,14 +55,12 @@ body {
   opacity: 0.9;
 }
 
-/* 🧭 NAVBAR */
 .navbar {
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* ✨ ANIMACIÓN GLOBAL */
 @keyframes fade-in {
   from {
     opacity: 0;
