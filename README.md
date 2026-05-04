@@ -1,317 +1,195 @@
-# OroApp 💰
+# OroApp
 
-## Descripción del Proyecto
+Una aplicación web moderna para la gestión y exploración de productos de joyería. Permite a los usuarios crear, organizar y gestionar su colección de joyas con una interfaz intuitiva y elegante.
 
-**OroApp** es una aplicación SPA (Single Page Application) para gestión y exploración de productos de joyería. Permite a usuarios registrarse, crear una colección de productos categorizados, buscar, filtrar, marcados como favoritos y visualizar detalles individuales. 
+## Características Principales
 
-**Tema elegido:** Tienda de joyería en línea (oro, plata, gemas)  
-**Dominio:** E-commerce / Gestión de inventario
+### Gestión de Productos
+- **Creación dinámica** de productos por categoría (Anillos, Aretes, Dijes, Cadenas, Pulseras, Especial)
+- **Atributos específicos** por tipo de joya (talla, material, tipo, estado, etc.)
+- **Edición y eliminación** de productos existentes
 
----
+### Exploración y Búsqueda
+- **Búsqueda en tiempo real** por descripción del producto
+- **Filtros combinables** por categoría y estado del producto
+- **Vista de cuadrícula** con información resumida de cada producto
 
-## Stack Técnico Obligatorio ✅
+### Sistema de Favoritos
+- **Marcado de favoritos** desde cualquier vista
+- **Página dedicada** para visualizar productos favoritos
+- **Gestión sencilla** para agregar o quitar de favoritos
 
-- **React** 19.2.5
-- **Vite** 8.0.10 (herramienta de build)
-- **Tailwind CSS** 4.2.4 (estilos)
-- **React Router** 7.14.2 (navegación)
-- **Context API** (estado global)
-- **localStorage** (persistencia)
+### Detalles y Reportes
+- **Vista detallada** de cada producto con todos sus atributos
+- **Página de informes** para funcionalidad futura
+- **Navegación intuitiva** entre vistas
 
----
+### Sistema de Autenticación
+- **Registro y login** de usuarios
+- **Protección de rutas** con redirección automática
+- **Persistencia de sesión** en el navegador
 
-## Requerimientos Funcionales Implementados
+## Tecnologías Utilizadas
 
-### ✅ 5.1 - Layout Principal Persistente
-- Navbar con navegación entre vistas (Home, Favoritos, Logout)
-- Layout general coherente con colores y efectos visuales
-- Persiste entre rutas
+- **React 19** - Framework principal
+- **Vite** - Herramienta de desarrollo y build
+- **React Router** - Navegación SPA
+- **Tailwind CSS** - Estilos y diseño
+- **Context API** - Gestión de estado global
+- **LocalStorage** - Persistencia de datos
 
-### ✅ 5.2 - Vista Principal de Exploración
-- Página Home que muestra colección de productos
-- Cada producto contiene: id, descripción, categoría, estado y otros atributos
+## Estructura del Proyecto
 
-### ✅ 5.3 - Búsqueda
-- Campo de búsqueda funcional por descripción
-- Filtrado en tiempo real (useMemo optimizado)
-
-### ✅ 5.4 - Filtros Combinables (Dos filtros)
-1. **Filtro por categoría:** ANILLOS, ARETES, DIJES, CADENAS, PULSERA, ESPECIAL
-2. **Filtro por estado:** Nuevo, Usado, Vintage
-
-Los filtros son combinables entre sí y con la búsqueda.
-
-### ✅ 5.5 - Shortlist / Favoritos
-- Página Favoritos independiente
-- Botón para agregar/quitar de favoritos
-- Persiste en localStorage
-
-### ✅ 5.6 - Detalle o Comparación
-- Ruta `/product/:id` con vista detallada
-- Muestra todos los atributos del producto
-- Opción para agregar a favoritos o eliminar
-
-### ✅ 5.7 - Formulario de Configuración
-- Formulario dinámico por categoría
-- Campos controlados: descripción, estado, atributos específicos (talla, tejido, tipo, etc.)
-- Validación básica
-- Persiste en localStorage
-
-### ✅ 5.8 - Ruta Protegida
-- `/home` y `/favorites` protegidas
-- Redirección automática a login si no hay sesión
-- ProtectedRoute wrapper
-
-### ✅ 5.9 - Estados de Experiencia
-- **Loading state:** Skeleton loading en listado
-- **Empty state:** Mensajes cuando no hay productos
-- **Error handling:** Validaciones en formulario
-
----
-
-## Requerimientos de Arquitectura ✅
-
-### Capa de Datos Desacoplada
-```javascript
-// src/services/productService.js
-// Centraliza acceso a localStorage
-// No hay queries de datos directas en componentes
-```
-
-### Normalización
-```javascript
-// src/data/categorias.js
-// Define estructura esperada de cada categoría
-// Metadatos de campos y opciones centralizados
-```
-
-### Estado Global
-```javascript
-// src/context/AuthContext.jsx
-// Sesión de usuario (login, logout, persistencia)
-// Globalizamos solo info transversal
-```
-
-### Persistencia Local
-1. **localStorage.users** - Datos de usuario (email, password)
-2. **localStorage.user** - Sesión actual (usuario logged in)
-3. **localStorage.oroapp_productos** - Colección de productos
-4. **localStorage.oroapp_favoritos** - Lista de favoritos
-
-### Separación de Responsabilidades
 ```
 src/
-  ├── app/              # Rutas, wrappers, shell
-  ├── components/       # Componentes reutilizables (Card, Navbar, Form)
-  ├── context/          # Estado global (Auth)
-  ├── data/             # Configuración local (categorías)
-  ├── hooks/            # Hooks personalizados (useFilter)
-  ├── pages/            # Vistas/pantallas (Home, Login, Favorites, Detail)
-  ├── services/         # Acceso a datos (productService)
-  └── index.css         # Estilos globales + Tailwind
+├── app/
+│   ├── App.jsx              # Configuración de rutas principales
+│   ├── Layout.jsx           # Layout general con navbar
+│   └── ProtectedRoute.jsx   # Protección de rutas autenticadas
+├── components/
+│   ├── Navbar.jsx           # Barra de navegación
+│   ├── ProductCard.jsx      # Tarjeta de producto (Home/Favoritos)
+│   ├── FavoriteCard.jsx     # Tarjeta específica para favoritos
+│   ├── CategoryCard.jsx     # Selector de categorías
+│   └── FormularioDinamico.jsx # Formulario de creación de productos
+├── context/
+│   └── AuthContext.jsx      # Gestión de autenticación
+├── data/
+│   └── categorias.js        # Configuración de categorías y atributos
+├── hooks/
+│   └── useFilter.js         # Hook personalizado para filtrado
+├── pages/
+│   ├── Login.jsx            # Página de autenticación
+│   ├── Home.jsx             # Página principal con productos
+│   ├── Favorites.jsx        # Página de productos favoritos
+│   ├── ProductDetail.jsx    # Vista detallada de producto
+│   └── Informe.jsx          # Página de informes (funcionalidad futura)
+└── services/
+    └── productService.js    # Servicio de gestión de productos
 ```
 
----
+## Instalación y Uso
 
-## Hook Personalizado Implementado
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
 
-### `useFilter(items, searchTerm, filters, searchKeys)`
-Encapsula la lógica de búsqueda y filtrado combinable.
-
-```javascript
-// Uso en Home.jsx
-const productosFiltrados = useFilter(
-  productos,
-  busqueda,
-  {
-    categoria: categoriaActiva || undefined,
-    estado: estadoFiltro || undefined,
-  },
-  ["descripcion"]
-);
-```
-
-**Beneficios:**
-- Lógica reutilizable
-- Optimizado con useMemo
-- Reducción de código boilerplate
-
----
-
-## Decisiones Técnicas Clave
-
-### 1. Context + localStorage para Sesión
-Aunque es simple, es suficiente para un taller. Permite aprender conceptos sin complejidad.
-
-### 2. Formulario Dinámico
-Los campos se generan desde `categoriasConfig`, permitiendo agregar nuevas categorías sin tocar componentes.
-
-### 3. ProductCard como Link
-La tarjeta completa es un enlace a detalle, excepto los botones (event.preventDefault).
-
-### 4. useMemo en useFilter
-Evita recálculos innecesarios en cada render, optimizando performance.
-
-### 5. Tailwind CSS para Todos los Estilos
-Coherencia visual, reactividad y facilidad de cambios. Paleta de colores centralizada en variables CSS.
-
----
-
-## Instalación
-
+### Instalación
 ```bash
-# Clonar/extraer el proyecto
+# Clonar el repositorio
+git clone <url-del-repositorio>
 cd oroapp
 
 # Instalar dependencias
 npm install
 
-# Ejecutar en desarrollo
+# Iniciar servidor de desarrollo
 npm run dev
-
-# Build para producción
-npm build
-
-# Linting
-npm run lint
 ```
 
----
+### Uso
+1. **Registro/Login**: Crea una cuenta o inicia sesión
+2. **Explorar productos**: Navega por la colección existente
+3. **Crear productos**: Selecciona una categoría y completa el formulario
+4. **Gestionar favoritos**: Marca productos como favoritos desde cualquier vista
+5. **Ver detalles**: Haz clic en cualquier producto para ver información completa
 
-## Ejecución
+## Diseño y UX
 
-```bash
-npm run dev
-# Se abre en http://localhost:5173
+### Paleta de Colores
+- **Dorado principal**: `#D4AF37` - Identidad de marca
+- **Azul gradiente**: `#3042B3` a `#6579F7` - Fondo principal
+- **Blanco translúcido**: Para tarjetas y elementos UI
 
-# Usuario demo (registrarse con cualquier email/contraseña)
-```
+### Componentes Interactivos
+- **Hover effects** en tarjetas y botones
+- **Transiciones suaves** entre estados
+- **Estados de carga** con skeletons
+- **Mensajes de estado vacío** informativos
 
----
+### Navegación
+- **Navbar persistente** con enlaces principales
+- **Botón de retorno** en páginas de detalle
+- **Protección automática** de rutas sensibles
 
-## Estructura de Archivos
+## Funcionalidades por Categoría
 
-```
-src/
-├── app/
-│   ├── App.jsx                 # Rutas principales
-│   ├── Layout.jsx              # Shell con navbar
-│   └── ProtectedRoute.jsx       # Wrapper para rutas privadas
-├── components/
-│   ├── CategoryCard.jsx         # Card de categoría (selector)
-│   ├── FormularioDinamico.jsx   # Form con campos dinámicos
-│   ├── Navbar.jsx               # Navegación superior
-│   └── ProductCard.jsx          # Card de producto (enlace a detalle)
-├── context/
-│   └── AuthContext.jsx          # Estado global de sesión
-├── data/
-│   └── categorias.js            # Metadata y estructura de categorías
-├── hooks/
-│   └── useFilter.js             # Hook personalizado de filtrado
-├── pages/
-│   ├── Home.jsx                 # Exploración + crear productos
-│   ├── Login.jsx                # Registro/login
-│   ├── Favorites.jsx            # Listado de favoritos
-│   └── ProductDetail.jsx        # Vista detallada de producto
-├── services/
-│   └── productService.js        # Acceso a datos (CRUD + favoritos)
-├── App.css                      # Estilos específicos (vacío)
-├── index.css                    # Estilos globales + Tailwind
-└── main.jsx                     # Punto de entrada
-```
+### Anillos
+- Talla (6-20)
+- Material (Oro, Plata, Acero)
+- Tipo (Alianza, Compromiso, Fashion)
 
----
+### Aretes
+- Tipo (Pendientes, Argollas, Topos)
+- Material (Oro, Plata, Fantasía)
+- Estado (Nuevo, Usado)
 
-## Flujo de Datos
+### Dijes
+- Tipo (Corazón, Estrella, Iniciales)
+- Material (Oro, Plata)
+- Tamaño (Pequeño, Mediano, Grande)
 
-```
-User Registration/Login
-  ↓
-AuthContext (login state + persistencia)
-  ↓
-Protected Routes (/home, /favorites)
-  ↓
-Home: 
-  ├─ Búsqueda + Filtros (useFilter hook)
-  ├─ Crear producto (FormularioDinamico)
-  └─ Ver productos (ProductCard)
-  
-Favoritos:
-  └─ Listar productos favoritos
-  
-Product Detail (/product/:id):
-  ├─ Ver detalles completos
-  ├─ Agregar/quitar favorito
-  └─ Eliminar producto
-```
+### Cadenas
+- Largo (40-80 cm)
+- Tipo (Correa, V, Serpentina)
+- Material (Oro, Plata, Acero)
 
----
+### Pulseras
+- Tipo (Tobillera, Brazalete, Esclava)
+- Material (Oro, Plata, Cuero)
+- Talla (S, M, L)
 
-## Proyección Futura
+### Especial
+- Campos personalizables según necesidad
+- Descripción detallada
+- Estado del producto
 
-### Sesión 2: Backend & API
-- Conectar a API REST (Express.js / Fastify)
-- Migrar localStorage a base de datos (MongoDB/PostgreSQL)
-- Autenticación con JWT
+## Estados de la Aplicación
 
-### Sesión 3: Validación & Testing
-- Implementar validaciones robustas (Zod/Yup)
-- Tests unitarios (Vitest/Jest)
-- Tests de componentes (Testing Library)
+### Estados de Carga
+- **Skeleton loading** en listados de productos
+- **Spinner** en operaciones de guardado
+- **Mensajes de progreso** en formularios
 
-### Sesión 4: UX Avanzada
-- Paginación / Virtualization en listados
-- Imagenes y galería
-- Filtros avanzados (rango de precio, etc.)
+### Estados Vacíos
+- **"No hay productos"** cuando la colección está vacía
+- **"No hay favoritos"** en página de favoritos
+- **"Producto no encontrado"** en rutas inválidas
 
-### Sesión 5: Optimización & Deploy
-- Code splitting y lazy loading
-- PWA capabilities
-- Deploy en Vercel / Netlify
-- Monitoring y analytics
+### Estados de Error
+- **Validación de formularios** con mensajes específicos
+- **Confirmaciones** antes de eliminar productos
+- **Redirección automática** en rutas protegidas sin autenticación
 
-### Futuro: E-commerce Completo
-- Carrito de compras
-- Checkout
-- Notificaciones
-- Sistema de reseñas
-- Admin panel
+## Persistencia de Datos
 
----
+La aplicación utiliza LocalStorage para mantener la información entre sesiones:
 
-## Cumplimiento de Requisitos
+- **`oroapp_productos`**: Colección completa de productos
+- **`oroapp_favoritos`**: Lista de IDs de productos favoritos
+- **`oroapp_users`**: Datos de usuarios registrados
+- **`user`**: Sesión actual del usuario autenticado
 
-| Requisito | Estado | Notas |
-|-----------|--------|-------|
-| Stack obligatorio | ✅ | React, Vite, Tailwind, Router |
-| Capa de servicios | ✅ | productService.js centralizado |
-| Normalización | ✅ | categoriasConfig.js estructura datos |
-| Estado global | ✅ | AuthContext + useFilter hook |
-| Persistencia (2+) | ✅ | users, user, productos, favoritos |
-| Búsqueda | ✅ | Por descripción, tiempo real |
-| Filtros (2+) | ✅ | Categoría + Estado (combinables) |
-| Favoritos | ✅ | Shortlist funcional |
-| Detalle | ✅ | /product/:id |
-| Formulario | ✅ | Dinámico por categoría |
-| Ruta protegida | ✅ | /home, /favorites, ProtectedRoute |
-| Estados UX | ✅ | Loading, empty, error |
-| Estructura modular | ✅ | Carpetas organizadas por responsabilidad |
-| Hook personalizado | ✅ | useFilter |
-| README técnico | ✅ | Este documento |
+## Seguridad y Validación
+
+### Autenticación
+- **Registro con email y contraseña**
+- **Validación de campos obligatorios**
+- **Protección de rutas sensibles**
+
+### Validación de Datos
+- **Campos requeridos** en formularios
+- **Tipos de datos correctos** (números, texto)
+- **Opciones predefinidas** para selects
+
+## Próximas Funcionalidades
+
+- **Sistema de informes avanzado** con exportación PDF
+- **Códigos QR** para productos
+- **Comparación de productos**
+- **Historial de cambios**
+- **Sincronización en la nube**
 
 ---
 
-## Notas de Calidad
-
-- **Accesibilidad:** Inputs con labels, focus states, aria-* cuando sea necesario
-- **Responsive:** Mobile-first con Tailwind (md:, lg: breakpoints)
-- **Coherencia visual:** Paleta de colores consistente (#D4AF37 oro, #3042B3 azul)
-- **Performance:** useMemo, lazy loading, CSS optimizado
-- **Mantenibilidad:** Nombres claros, componentes pequeños, lógica desacoplada
-
----
-
-## Licencia
-
-Proyecto educativo - Taller Integrador Técnico
-
+**Desarrollado para la gestión elegante de joyería**
