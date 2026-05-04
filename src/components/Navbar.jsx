@@ -23,6 +23,13 @@ export default function Navbar() {
           Favoritos
         </Link>
 
+        <Link
+          to="/informe"
+          className="hover:text-[#D4AF37] transition"
+        >
+          Informe
+        </Link>
+
         <button
           onClick={() => {
             localStorage.removeItem("user");

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { productService } from "../services/productService";
-import ProductCard from "../components/ProductCard";
+import FavoriteCard from "../components/FavoriteCard";
 
 export default function Favorites() {
   const [favoritos, setFavoritos] = useState([]);
@@ -24,7 +24,7 @@ export default function Favorites() {
           <p>No hay favoritos</p>
         ) : (
           favoritos.map((p) => (
-            <ProductCard
+            <FavoriteCard
               key={p.id}
               producto={p}
               refresh={loadData}

@@ -34,12 +34,6 @@ export default function Home() {
     ["descripcion"]
   );
 
-  const handleGenerateReport = () => {
-    alert(
-      `Funcionalidad futura: generar informe${categoriaActiva ? ` para ${categoriaActiva}` : ""}`
-    );
-  };
-
   return (
     <div className="min-h-screen p-6 relative overflow-hidden">
 
@@ -54,12 +48,6 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-[#D4AF37] drop-shadow-lg">
             OroApp 💰
           </h1>
-          <button
-            onClick={handleGenerateReport}
-            className="px-4 py-2 rounded bg-[#D4AF37] text-black font-semibold hover:bg-[#c6a84a] transition"
-          >
-            Generar informe
-          </button>
         </div>
 
         <input

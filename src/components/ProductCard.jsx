@@ -15,29 +15,28 @@ export default function ProductCard({ producto, refresh }) {
   };
 
   return (
-    <Link
-      to={`/product/${producto.id}`}
-      className="card border border-[#D4AF37]/30 bg-[#D4AF37]/10 hover:shadow-lg hover:scale-105 transition-all cursor-pointer block"
-    >
+    <div className="card border border-[#D4AF37]/30 bg-[#D4AF37]/10 hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
 
-      <h3 className="text-[#D4AF37] font-bold">
-        {producto.categoria}
-      </h3>
+      <Link to={`/product/${producto.id}`} className="block">
+        <h3 className="text-[#D4AF37] font-bold">
+          {producto.categoria}
+        </h3>
 
-      <p className="text-sm opacity-80 font-semibold">
-        {producto.descripcion}
-      </p>
+        <p className="text-sm opacity-80 font-semibold">
+          {producto.descripcion}
+        </p>
 
-      <div className="text-xs mt-2 opacity-70">
-        {Object.entries(producto).map(([key, value]) => {
-          if (key === "id" || key === "categoria" || key === "descripcion") return null;
-          return (
-            <p key={key}>
-              {key}: {value}
-            </p>
-          );
-        })}
-      </div>
+        <div className="text-xs mt-2 opacity-70">
+          {Object.entries(producto).map(([key, value]) => {
+            if (key === "id" || key === "categoria" || key === "descripcion") return null;
+            return (
+              <p key={key}>
+                {key}: {value}
+              </p>
+            );
+          })}
+        </div>
+      </Link>
 
       <div className="flex gap-2 mt-3">
         <button
@@ -55,6 +54,6 @@ export default function ProductCard({ producto, refresh }) {
         </button>
       </div>
 
-    </Link>
+    </div>
   );
 }

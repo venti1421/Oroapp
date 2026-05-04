@@ -112,6 +112,13 @@ export default function ProductDetail() {
             </button>
 
             <button
+              onClick={() => navigate(`/informe/${producto.id}`)}
+              className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition"
+            >
+              📋 Generar informe
+            </button>
+
+            <button
               onClick={handleDelete}
               className="flex-1 px-4 py-3 bg-red-600/80 hover:bg-red-700 text-white rounded-lg font-semibold transition"
             >

@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import Favorites from "../pages/Favorites";
 import ProductDetail from "../pages/ProductDetail";
+import Informe from "../pages/Informe";
 import Layout from "./Layout";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -41,6 +42,28 @@ export default function App() {
             <ProtectedRoute>
               <Layout>
                 <ProductDetail />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/informe"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Informe />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/informe/:id"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Informe />
               </Layout>
             </ProtectedRoute>
           }

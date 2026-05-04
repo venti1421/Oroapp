@@ -7,6 +7,10 @@ export default function FormularioDinamico({ categoria, onSave }) {
 
   const [formData, setFormData] = useState({});
 
+  const formatFieldName = (str) => {
+    return str.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, str => str.toUpperCase());
+  };
+
   const handleChange = (campo, valor) => {
     setFormData((prev) => ({
       ...prev,
@@ -66,7 +70,7 @@ export default function FormularioDinamico({ categoria, onSave }) {
               value={formData[campo] || ""}
               onChange={(e) => handleChange(campo, e.target.value)}
             >
-              <option value="">Selecciona {campo}</option>
+              <option value="">Selecciona {formatFieldName(campo)}</option>
 
               {config.opciones[campo].map((op, i) => (
                 <option key={i} value={op}>
@@ -77,7 +81,7 @@ export default function FormularioDinamico({ categoria, onSave }) {
           ) : (
             <input
               type="text"
-              placeholder={campo}
+              placeholder={formatFieldName(campo)}
               className="w-full p-2 rounded bg-white text-black"
               value={formData[campo] || ""}
               onChange={(e) => handleChange(campo, e.target.value)}
