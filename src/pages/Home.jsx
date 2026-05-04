@@ -8,6 +8,7 @@ import { useFilter } from "../hooks/useFilter";
 
 export default function Home() {
   const [categoriaActiva, setCategoriaActiva] = useState(null);
+  const [categoriaFiltro, setCategoriaFiltro] = useState(null);
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ export default function Home() {
     productos,
     busqueda,
     {
-      categoria: categoriaActiva || undefined,
+      categoria: categoriaFiltro || undefined,
     },
     ["descripcion"]
   );
@@ -46,7 +47,7 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <h1 className="text-3xl font-bold text-[#D4AF37] drop-shadow-lg">
-            OroApp 💰
+            OroApp
           </h1>
         </div>
 
@@ -63,11 +64,11 @@ export default function Home() {
             Filtrar por categoría:
           </label>
           <select
-            value={categoriaActiva || ""}
-            onChange={(e) => setCategoriaActiva(e.target.value || null)}
+            value={categoriaFiltro || ""}
+            onChange={(e) => setCategoriaFiltro(e.target.value || null)}
             className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
           >
-            <option value="">Todas</option>
+            <option value="">Todas las categorías</option>
             {Object.keys(categoriasConfig).map((cat) => (
               <option key={cat} value={cat}>
                 {cat}
@@ -76,32 +77,53 @@ export default function Home() {
           </select>
         </div>
 
-        <div className="mb-8">
-          <p className="text-white text-sm mb-3">O selecciona una categoría:</p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="animate-fade-in mb-8">
+          <h2 className="text-xl text-white mb-4">Registrar nuevo producto</h2>
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2">
+              Selecciona la categoría para el producto:
+            </label>
+            <select
+              value={categoriaActiva || ""}
+              onChange={(e) => setCategoriaActiva(e.target.value)}
+              className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37] mb-6"
+            >
+              <option value="" disabled>Selecciona una categoría</option>
+              {Object.keys(categoriasConfig).map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
             {Object.keys(categoriasConfig).map((cat) => (
               <CategoryCard
                 key={cat}
                 cat={cat}
                 active={categoriaActiva === cat}
-                onClick={() => setCategoriaActiva(cat)}
+                onClick={() => setCategoriaActiva(categoriaActiva === cat ? null : cat)}
               />
             ))}
           </div>
-        </div>
-
-        {categoriaActiva && (
-          <div className="animate-fade-in">
+          {categoriaActiva ? (
             <FormularioDinamico
               categoria={categoriaActiva}
-              onSave={loadData}
+              onSave={() => {
+                loadData();
+                setCategoriaActiva(null);
+              }}
             />
-          </div>
-        )}
+          ) : (
+            <div className="text-white/70">
+              Elige una categoría en el desplegable o en las tarjetas para registrar un producto.
+            </div>
+          )}
+        </div>
 
         <div className="mt-10">
           <h2 className="text-xl text-white mb-4">
-            📦 Productos ({productosFiltrados.length})
+            Productos{categoriaFiltro ? ` - ${categoriaFiltro}` : ""} ({productosFiltrados.length})
           </h2>
 
           {loading ? (
@@ -116,7 +138,7 @@ export default function Home() {
           ) : productosFiltrados.length === 0 ? (
 
             <div className="text-center text-white opacity-70 mt-10">
-              <p className="text-5xl mb-3">📦</p>
+              <p className="text-4xl mb-3">No hay productos</p>
               <p>No hay productos con esos filtros</p>
               <p className="text-sm">
                 Intenta otros filtros o crea uno nuevo

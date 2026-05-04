@@ -7,11 +7,12 @@ Una aplicación web moderna para la gestión y exploración de productos de joye
 ### Gestión de Productos
 - **Creación dinámica** de productos por categoría (Anillos, Aretes, Dijes, Cadenas, Pulseras, Especial)
 - **Atributos específicos** por tipo de joya (talla, material, tipo, estado, etc.)
+- **Registro directo** desde tarjetas de categoría sin usar un botón adicional
 - **Edición y eliminación** de productos existentes
 
 ### Exploración y Búsqueda
 - **Búsqueda en tiempo real** por descripción del producto
-- **Filtros combinables** por categoría y estado del producto
+- **Filtros independientes** por categoría y estado del producto (no afectan la creación)
 - **Vista de cuadrícula** con información resumida de cada producto
 
 ### Sistema de Favoritos
@@ -89,8 +90,8 @@ npm run dev
 
 ### Uso
 1. **Registro/Login**: Crea una cuenta o inicia sesión
-2. **Explorar productos**: Navega por la colección existente
-3. **Crear productos**: Selecciona una categoría y completa el formulario
+2. **Explorar productos**: Navega por la colección existente y filtra por categoría si lo deseas
+3. **Crear productos**: Selecciona la categoría directamente desde las tarjetas y completa el formulario de registro
 4. **Gestionar favoritos**: Marca productos como favoritos desde cualquier vista
 5. **Ver detalles**: Haz clic en cualquier producto para ver información completa
 
