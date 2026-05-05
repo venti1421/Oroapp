@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import InlineAlert from "../components/InlineAlert";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, register } = useAuth();
 
   const [modoRegistro, setModoRegistro] = useState(false);
-
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState("error");
 
   const handleChange = (campo, valor) => {
     setForm({
@@ -25,49 +27,55 @@ export default function Login() {
   };
 
   const handleRegister = () => {
+    setMessage(null);
+
     if (!validarEmail(form.email)) {
-      alert("Correo inválido");
+      setMessage("Correo inválido");
+      setMessageType("error");
       return;
     }
 
     if (form.password.length < 4) {
-      alert("La contraseña debe tener mínimo 4 caracteres");
+      setMessage("La contraseña debe tener mínimo 4 caracteres");
+      setMessageType("error");
       return;
     }
 
-    const usuarios = JSON.parse(localStorage.getItem("users")) || [];
+    const result = register(form);
 
-    const existe = usuarios.find((u) => u.email === form.email);
-
-    if (existe) {
-      alert("Este usuario ya existe");
+    if (!result.ok) {
+      setMessage(result.error);
+      setMessageType("error");
       return;
     }
 
-    usuarios.push(form);
-    localStorage.setItem("users", JSON.stringify(usuarios));
-
-    alert("Registro exitoso 🎉");
-
+    setMessage("Registro exitoso 🎉 Puedes iniciar sesión.");
+    setMessageType("success");
     setModoRegistro(false);
   };
 
-  // LOGIN
   const handleLogin = () => {
-    const usuarios = JSON.parse(localStorage.getItem("users")) || [];
+    setMessage(null);
 
-    const user = usuarios.find(
-      (u) =>
-        u.email === form.email &&
-        u.password === form.password
-    );
-
-    if (!user) {
-      alert("Credenciales incorrectas");
+    if (!validarEmail(form.email)) {
+      setMessage("Correo inválido");
+      setMessageType("error");
       return;
     }
 
-    login(user);
+    if (form.password.length < 4) {
+      setMessage("La contraseña debe tener mínimo 4 caracteres");
+      setMessageType("error");
+      return;
+    }
+
+    const result = login(form);
+
+    if (!result.ok) {
+      setMessage(result.error);
+      setMessageType("error");
+      return;
+    }
 
     navigate("/home");
   };
@@ -80,14 +88,25 @@ export default function Login() {
       <div className="absolute w-96 h-96 bg-[#D4AF37] opacity-20 rounded-full blur-3xl bottom-10 right-10"></div>
 
       <div className="relative z-10 backdrop-blur-md bg-white/10 border border-white/20 p-8 rounded-xl shadow-xl w-80 text-white">
-        <h1 className="text-2xl font-bold text-center mb-5 text-[#D4AF37]">
-          {modoRegistro ? "Registro" : "Login"} 💰
+        <h1 className="text-4xl font-bold text-center mb-2 text-[#D4AF37]">
+          OroApp 💰
         </h1>
+        <h2 className="text-xl font-semibold text-center mb-5 text-white">
+          {modoRegistro ? "Registro" : "Login"}
+        </h2>
+
+        {message && (
+          <div className="mb-4">
+            <InlineAlert type={messageType}>{message}</InlineAlert>
+          </div>
+        )}
 
         <input
           type="email"
           placeholder="Correo"
-          className="w-full mb-3 p-2 rounded bg-white/20 placeholder-white/70 text-white outline-none"
+          className={`w-full mb-3 p-2 rounded bg-white/20 placeholder-white/70 text-white outline-none transition ${
+            messageType === "error" ? "ring-1 ring-red-400" : ""
+          }`}
           value={form.email}
           onChange={(e) => handleChange("email", e.target.value)}
         />
@@ -95,7 +114,9 @@ export default function Login() {
         <input
           type="password"
           placeholder="Contraseña"
-          className="w-full mb-3 p-2 rounded bg-white/20 placeholder-white/70 text-white outline-none"
+          className={`w-full mb-3 p-2 rounded bg-white/20 placeholder-white/70 text-white outline-none transition ${
+            messageType === "error" ? "ring-1 ring-red-400" : ""
+          }`}
           value={form.password}
           onChange={(e) => handleChange("password", e.target.value)}
         />

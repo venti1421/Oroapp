@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "categoria": "ANILLOS",
+    "descripcion": "Pedido de anillo clásico para hombre",
+    "genero": "Hombre",
+    "talla": "12"
+  },
+  {
+    "id": 2,
+    "categoria": "ANILLOS",
+    "descripcion": "Pedido de anillo elegante para mujer",
+    "genero": "Mujer",
+    "talla": "8"
+  },
+  {
+    "id": 3,
+    "categoria": "ARETES",
+    "descripcion": "Pedido de aretes tipo topitos",
+    "tipoArete": "Topos",
+    "tamaño": "Pequeño"
+  },
+  {
+    "id": 4,
+    "categoria": "ARETES",
+    "descripcion": "Pedido de candongas mediana",
+    "tipoArete": "Candongas",
+    "tamaño": "Mediano"
+  },
+  {
+    "id": 5,
+    "categoria": "DIJES",
+    "descripcion": "Pedido de dije pequeño",
+    "tamaño": "Pequeño"
+  },
+  {
+    "id": 6,
+    "categoria": "CADENAS",
+    "descripcion": "Pedido de cadena 45 cm",
+    "largoCm": "45"
+  },
+  {
+    "id": 7,
+    "categoria": "PULSERA",
+    "descripcion": "Pedido de pulsera 20 cm",
+    "largoCm": "20"
+  },
+  {
+    "id": 8,
+    "categoria": "ESPECIAL",
+    "descripcion": "Pedido de reloj especial",
+    "tipoEspecial": "Relojes"
+  }
+]

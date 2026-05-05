@@ -25,13 +25,25 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const login = (userData) => {
+  const login = (credentials) => {
+    const users = safeParse(localStorage.getItem("users")) || [];
+    const foundUser = users.find(
+      (u) =>
+        u.email === credentials.email &&
+        u.password === credentials.password
+    );
+
+    if (!foundUser) {
+      return { ok: false, error: "Credenciales incorrectas" };
+    }
+
     const normalized = {
-      email: userData.email,
+      email: foundUser.email,
     };
 
     localStorage.setItem("user", JSON.stringify(normalized));
     setUser(normalized);
+    return { ok: true };
   };
 
   const register = (newUser) => {

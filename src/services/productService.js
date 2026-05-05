@@ -1,9 +1,22 @@
+import productosSeed from "../data/productos.json";
+
 const KEY = "oroapp_productos";
 const FAV_KEY = "oroapp_favoritos";
 
 export const productService = {
   getAll() {
-    return JSON.parse(localStorage.getItem(KEY)) || [];
+    const stored = JSON.parse(localStorage.getItem(KEY));
+
+    if (stored && stored.length > 0) {
+      return stored;
+    }
+
+    if (productosSeed && productosSeed.length > 0) {
+      localStorage.setItem(KEY, JSON.stringify(productosSeed));
+      return productosSeed;
+    }
+
+    return [];
   },
 
   save(producto) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { categoriasConfig } from "../data/categorias";
 import FormularioDinamico from "../components/FormularioDinamico";
 import CategoryCard from "../components/CategoryCard";
@@ -9,9 +9,34 @@ import { useFilter } from "../hooks/useFilter";
 export default function Home() {
   const [categoriaActiva, setCategoriaActiva] = useState(null);
   const [categoriaFiltro, setCategoriaFiltro] = useState(null);
+  const [campoFiltro, setCampoFiltro] = useState("");
+  const [valorFiltro, setValorFiltro] = useState("");
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const availableFilterFields = useMemo(() => {
+    const campos = new Set();
+    Object.values(categoriasConfig).forEach((config) => {
+      config.campos.forEach((campo) => {
+        if (campo !== "descripcion") campos.add(campo);
+      });
+    });
+    return Array.from(campos);
+  }, []);
+
+  const filterFieldValues = useMemo(() => {
+    if (!campoFiltro) return [];
+    const valores = new Set();
+
+    productos.forEach((producto) => {
+      if (producto[campoFiltro]) {
+        valores.add(producto[campoFiltro]);
+      }
+    });
+
+    return Array.from(valores);
+  }, [productos, campoFiltro]);
 
   const loadData = () => {
     setLoading(true);
@@ -26,12 +51,18 @@ export default function Home() {
     loadData();
   }, []);
 
+  const filtros = {
+    categoria: categoriaFiltro || undefined,
+  };
+
+  if (campoFiltro && valorFiltro) {
+    filtros[campoFiltro] = valorFiltro;
+  }
+
   const productosFiltrados = useFilter(
     productos,
     busqueda,
-    {
-      categoria: categoriaFiltro || undefined,
-    },
+    filtros,
     ["descripcion"]
   );
 
@@ -59,22 +90,62 @@ export default function Home() {
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        <div className="mb-6">
-          <label className="block text-white text-sm mb-2">
-            Filtrar por categoría:
-          </label>
-          <select
-            value={categoriaFiltro || ""}
-            onChange={(e) => setCategoriaFiltro(e.target.value || null)}
-            className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
-          >
-            <option value="">Todas las categorías</option>
-            {Object.keys(categoriasConfig).map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-white text-sm mb-2">
+              Filtrar por categoría:
+            </label>
+            <select
+              value={categoriaFiltro || ""}
+              onChange={(e) => setCategoriaFiltro(e.target.value || null)}
+              className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            >
+              <option value="">Todas las categorías</option>
+              {Object.keys(categoriasConfig).map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-white text-sm mb-2">
+              Filtro adicional:
+            </label>
+            <div className="grid gap-3">
+              <select
+                value={campoFiltro}
+                onChange={(e) => {
+                  setCampoFiltro(e.target.value);
+                  setValorFiltro("");
+                }}
+                className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              >
+                <option value="">Selecciona atributo</option>
+                {availableFilterFields.map((campo) => (
+                  <option key={campo} value={campo}>
+                    {campo}
+                  </option>
+                ))}
+              </select>
+
+              {campoFiltro && (
+                <select
+                  value={valorFiltro}
+                  onChange={(e) => setValorFiltro(e.target.value)}
+                  className="w-full p-2 rounded bg-white text-black outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                >
+                  <option value="">Selecciona valor</option>
+                  {filterFieldValues.map((valor) => (
+                    <option key={valor} value={valor}>
+                      {valor}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="animate-fade-in mb-8">
